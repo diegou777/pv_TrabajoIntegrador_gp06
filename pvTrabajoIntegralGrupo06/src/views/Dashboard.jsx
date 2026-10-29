@@ -23,7 +23,7 @@ const Dashboard = () => {
 
       {/* Tarjetas de Métricas Globales Simuladas (Estructura de Panel) */}
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Card elevation={3} sx={{ borderLeft: '5px solid #1976d2' }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -50,7 +50,7 @@ const Dashboard = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <Card elevation={3} sx={{ borderLeft: '5px solid #9c27b0' }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

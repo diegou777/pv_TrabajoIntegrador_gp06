@@ -17,7 +17,7 @@ import {
   Box,
   Modal,
 } from "@mui/material";
-import FormularioAltaCliente from "../components/common/FormularioAltaCliente";
+import FormularioAltaCliente from "../Components/common/FormularioAltaCliente";
 import { obtenerClientes } from "../services/clientesService";
 import { useClientesEliminados } from "../hooks/useClientesEliminados";
 
@@ -85,13 +85,15 @@ const ListaClientes = () => {
   if (loading) {
     return (
       <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="70vh"
-      >
-        <CircularProgress />
-      </Box>
+  sx={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "70vh",
+  }}
+>
+  <CircularProgress />
+</Box>
     );
   }
 
@@ -105,12 +107,14 @@ const ListaClientes = () => {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ mb: 2 }}
-      >
+     <Box
+  sx={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    mb: 2,
+  }}
+>
         <Box>
           <Typography variant="h4" gutterBottom>
             Lista de Clientes

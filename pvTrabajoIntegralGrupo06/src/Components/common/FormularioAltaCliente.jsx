@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Box,
@@ -119,51 +120,59 @@ const FormularioAltaCliente = ({ onClienteCreado }) => {
       phone: cliente.phone,
     };
 
-try {
-  const nuevoCliente = await crearCliente(datosEstructurados);
+    try {
+      const nuevoCliente = await crearCliente(datosEstructurados);
 
-  setAlertSeverity("success");
-  setAlertMessage(
-    `¡Cliente registrado con éxito! ID asignado: ${nuevoCliente.id}`
-  );
-  setOpenSnackbar(true);
+      setAlertSeverity("success");
+      setAlertMessage(
+        `¡Cliente registrado con éxito! ID asignado: ${nuevoCliente.id}`
+      );
+      setOpenSnackbar(true);
 
-  setTimeout(() => {
-    if (onClienteCreado) {
-      onClienteCreado(nuevoCliente);
+      setTimeout(() => {
+        if (onClienteCreado) {
+          onClienteCreado(nuevoCliente);
+        }
+
+        setCliente({
+          firstname: "",
+          lastname: "",
+          email: "",
+          username: "",
+          password: "",
+          phone: "",
+        });
+
+        setErrores({});
+      }, 1500);
+    } catch (error) {
+      setAlertSeverity("error");
+      setAlertMessage(
+        "Fallo en el servidor externo. No se pudo registrar."
+      );
+      setOpenSnackbar(true);
+      console.error(error);
+    } finally {
+      setCargando(false);
     }
-
-    setCliente({
-      firstname: "",
-      lastname: "",
-      email: "",
-      username: "",
-      password: "",
-      phone: "",
-    });
-
-    setErrores({});
-  }, 1500);
-} catch (error) {
-  setAlertSeverity("error");
-  setAlertMessage("Fallo en el servidor externo. No se pudo registrar.");
-  setOpenSnackbar(true);
-  console.error(error);
-} finally {
-  setCargando(false);
-}
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      noValidate
+      sx={{ mt: 1 }}
+    >
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
             disabled={cargando}
             label="Nombre"
             name="firstname"
+            autoComplete="given-name"
             value={cliente.firstname}
             onChange={handleChange}
             error={!!errores.firstname}
@@ -171,13 +180,14 @@ try {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
             disabled={cargando}
             label="Apellido"
             name="lastname"
+            autoComplete="family-name"
             value={cliente.lastname}
             onChange={handleChange}
             error={!!errores.lastname}
@@ -185,7 +195,7 @@ try {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={12}>
           <TextField
             required
             fullWidth
@@ -193,6 +203,7 @@ try {
             type="email"
             label="Correo Electrónico"
             name="email"
+            autoComplete="email"
             value={cliente.email}
             onChange={handleChange}
             error={!!errores.email}
@@ -200,13 +211,14 @@ try {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
             disabled={cargando}
             label="Nombre de Usuario"
             name="username"
+            autoComplete="username"
             value={cliente.username}
             onChange={handleChange}
             error={!!errores.username}
@@ -214,7 +226,7 @@ try {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             required
             fullWidth
@@ -222,6 +234,7 @@ try {
             type="password"
             label="Contraseña"
             name="password"
+            autoComplete="new-password"
             value={cliente.password}
             onChange={handleChange}
             error={!!errores.password}
@@ -229,13 +242,14 @@ try {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={12}>
           <TextField
             required
             fullWidth
             disabled={cargando}
             label="Teléfono"
             name="phone"
+            autoComplete="tel"
             value={cliente.phone}
             onChange={handleChange}
             error={!!errores.phone}
@@ -243,7 +257,7 @@ try {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Button
             type="submit"
             variant="contained"
@@ -276,8 +290,13 @@ try {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={() => setOpenSnackbar(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        sx={{ zIndex: (theme) => theme.zIndex.modal + 1 }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.modal + 1,
+        }}
       >
         <Alert
           onClose={() => setOpenSnackbar(false)}
